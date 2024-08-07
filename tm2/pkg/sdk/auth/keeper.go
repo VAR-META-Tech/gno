@@ -160,3 +160,23 @@ func (ak AccountKeeper) decodeAccount(bz []byte) (acc std.Account) {
 	}
 	return
 }
+
+// Concrete implementation of AccountKeeper.
+type CoinKeeper struct {
+	// The (unexposed) key used to access the store from the Context.
+	key store.StoreKey
+
+	// The prototypical Account constructor.
+	proto func() std.Account
+}
+
+// NewAccountKeeper returns a new AccountKeeper that uses go-amino to
+// (binary) encode and decode concrete std.Accounts.
+func NewAccountKeeper(
+	key store.StoreKey, proto func() std.Account,
+) AccountKeeper {
+	return AccountKeeper{
+		key:   key,
+		proto: proto,
+	}
+}
