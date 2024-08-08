@@ -245,7 +245,7 @@ func (view ViewKeeper) HasCoins(ctx sdk.Context, addr crypto.Address, amt std.Co
 }
 
 func (view ViewKeeper) TotalCoin(ctx sdk.Context, denom string) int64 {
-	return view.TotalCoin(ctx, denom)
+	return view.tck.totalCoin(ctx, denom)
 }
 
 // TotalCoinKeeper manages the total amount of coins for various denominations.
@@ -310,7 +310,7 @@ func (tck TotalCoinKeeper) decreaseTotalCoin(ctx sdk.Context, coins std.Coins) e
 }
 
 // GetTotalCoin returns the total coin for a given denomination.
-func (tck TotalCoinKeeper) GetTotalCoin(ctx sdk.Context, denom string) int64 {
+func (tck TotalCoinKeeper) totalCoin(ctx sdk.Context, denom string) int64 {
 	stor := ctx.Store(tck.key)
 	bz := stor.Get(TotalCoinStoreKey(denom))
 	if bz == nil {
