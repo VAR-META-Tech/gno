@@ -23,7 +23,6 @@ type BankKeeperI interface {
 	SubtractCoins(ctx sdk.Context, addr crypto.Address, amt std.Coins) (std.Coins, error)
 	AddCoins(ctx sdk.Context, addr crypto.Address, amt std.Coins) (std.Coins, error)
 	SetCoins(ctx sdk.Context, addr crypto.Address, amt std.Coins) error
-	TotalCoin(ctx sdk.Context, denom string) int64
 }
 
 var _ BankKeeperI = BankKeeper{}
@@ -145,7 +144,7 @@ func (bank BankKeeper) SubtractCoins(ctx sdk.Context, addr crypto.Address, amt s
 		return nil, err
 	}
 
-	err = bank.tck.DecreaseTotalCoin(ctx, newCoins)
+	err = bank.tck.decreaseTotalCoin(ctx, newCoins)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +172,7 @@ func (bank BankKeeper) AddCoins(ctx sdk.Context, addr crypto.Address, amt std.Co
 		return nil, err
 	}
 
-	err = bank.tck.IncreaseTotalCoin(ctx, newCoins)
+	err = bank.tck.increaseTotalCoin(ctx, newCoins)
 	if err != nil {
 		return nil, err
 	}
@@ -251,20 +250,18 @@ func (view ViewKeeper) TotalCoin(ctx sdk.Context, denom string) int64 {
 
 // TotalCoinKeeper manages the total amount of coins for various denominations.
 type TotalCoinKeeper struct {
-	key   store.StoreKey
-	proto func() std.Coin
+	key store.StoreKey
 }
 
 // NewTotalCoinKeeper returns a new TotalCoinKeeper.
-func NewTotalCoinKeeper(key store.StoreKey, proto func() std.Coin) TotalCoinKeeper {
+func NewTotalCoinKeeper(key store.StoreKey) TotalCoinKeeper {
 	return TotalCoinKeeper{
-		key:   key,
-		proto: proto,
+		key: key,
 	}
 }
 
-// IncreaseTotalCoins increases the total coin amounts for the specified denominations.
-func (tck TotalCoinKeeper) IncreaseTotalCoin(ctx sdk.Context, coins std.Coins) error {
+// increaseTotalCoin increases the total coin amounts for the specified denominations.
+func (tck TotalCoinKeeper) increaseTotalCoin(ctx sdk.Context, coins std.Coins) error {
 	stor := ctx.Store(tck.key)
 
 	for _, coin := range coins {
@@ -275,7 +272,7 @@ func (tck TotalCoinKeeper) IncreaseTotalCoin(ctx sdk.Context, coins std.Coins) e
 		}
 
 		newTotalCoin := oldTotalCoin.Add(coin)
-		err := tck.SetTotalCoin(ctx, newTotalCoin)
+		err := tck.setTotalCoin(ctx, newTotalCoin)
 		if err != nil {
 			return err
 		}
@@ -284,8 +281,8 @@ func (tck TotalCoinKeeper) IncreaseTotalCoin(ctx sdk.Context, coins std.Coins) e
 	return nil
 }
 
-// DecreaseTotalCoins decreases the total coin amounts for the specified denominations.
-func (tck TotalCoinKeeper) DecreaseTotalCoin(ctx sdk.Context, coins std.Coins) error {
+// decreaseTotalCoin decreases the total coin amounts for the specified denominations.
+func (tck TotalCoinKeeper) decreaseTotalCoin(ctx sdk.Context, coins std.Coins) error {
 	stor := ctx.Store(tck.key)
 
 	for _, coin := range coins {
@@ -303,7 +300,7 @@ func (tck TotalCoinKeeper) DecreaseTotalCoin(ctx sdk.Context, coins std.Coins) e
 			return err
 		}
 
-		err := tck.SetTotalCoin(ctx, newTotalCoin)
+		err := tck.setTotalCoin(ctx, newTotalCoin)
 		if err != nil {
 			return err
 		}
@@ -326,7 +323,7 @@ func (tck TotalCoinKeeper) GetTotalCoin(ctx sdk.Context, denom string) int64 {
 }
 
 // SetTotalCoin sets the total coin amount for a given denomination.
-func (tck TotalCoinKeeper) SetTotalCoin(ctx sdk.Context, coin std.Coin) error {
+func (tck TotalCoinKeeper) setTotalCoin(ctx sdk.Context, coin std.Coin) error {
 	stor := ctx.Store(tck.key)
 	bz, err := amino.MarshalAny(coin)
 	if err != nil {

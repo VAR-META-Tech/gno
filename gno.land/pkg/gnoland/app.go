@@ -87,7 +87,7 @@ func NewAppWithOptions(cfg *AppOptions) (abci.Application, error) {
 
 	// Construct keepers.
 	acctKpr := auth.NewAccountKeeper(mainKey, ProtoGnoAccount)
-	tckpr := bank.NewTotalCoinKeeper(mainKey, nil)
+	tckpr := bank.NewTotalCoinKeeper(mainKey)
 	bankKpr := bank.NewBankKeeper(acctKpr, tckpr)
 
 	// XXX: Embed this ?
