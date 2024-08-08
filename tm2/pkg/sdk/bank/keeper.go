@@ -266,10 +266,11 @@ func (tck TotalCoinKeeper) increaseTotalCoin(ctx sdk.Context, coins std.Coins) e
 
 	for _, coin := range coins {
 		bz := stor.Get(TotalCoinStoreKey(coin.Denom))
-		var oldTotalCoin = std.NewCoin(coin.Denom, 0)
-		if bz != nil {
-			oldTotalCoin = tck.decodeTotalCoin(bz)
+		if bz == nil {
+			continue
 		}
+
+		oldTotalCoin := tck.decodeTotalCoin(bz)
 
 		newTotalCoin := oldTotalCoin.Add(coin)
 		err := tck.setTotalCoin(ctx, newTotalCoin)
