@@ -323,13 +323,13 @@ func (tck TotalCoinKeeper) GetTotalCoin(ctx sdk.Context, denom string) int64 {
 }
 
 // SetTotalCoin sets the total coin amount for a given denomination.
-func (tck TotalCoinKeeper) setTotalCoin(ctx sdk.Context, coin std.Coin) error {
+func (tck TotalCoinKeeper) setTotalCoin(ctx sdk.Context, totalCoin std.Coin) error {
 	stor := ctx.Store(tck.key)
-	bz, err := amino.MarshalAny(coin)
+	bz, err := amino.MarshalAny(totalCoin)
 	if err != nil {
 		return err
 	}
-	stor.Set(TotalCoinStoreKey(coin.Denom), bz)
+	stor.Set(TotalCoinStoreKey(totalCoin.Denom), bz)
 	return nil
 }
 
