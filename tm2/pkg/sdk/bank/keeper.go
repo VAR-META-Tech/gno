@@ -38,11 +38,11 @@ type BankKeeper struct {
 }
 
 // NewBankKeeper returns a new BankKeeper.
-func NewBankKeeper(acck auth.AccountKeeper) BankKeeper {
+func NewBankKeeper(acck auth.AccountKeeper, tck TotalCoinKeeper) BankKeeper {
 	return BankKeeper{
-		ViewKeeper: NewViewKeeper(acck),
+		ViewKeeper: NewViewKeeper(acck, tck),
 		acck:       acck,
-		tck:        NewTotalCoinKeeper(nil, nil),
+		tck:        tck,
 	}
 }
 
@@ -218,11 +218,12 @@ var _ ViewKeeperI = ViewKeeper{}
 // ViewKeeper implements a read only keeper implementation of ViewKeeperI.
 type ViewKeeper struct {
 	acck auth.AccountKeeper
+	tck  TotalCoinKeeper
 }
 
 // NewViewKeeper returns a new ViewKeeper.
-func NewViewKeeper(acck auth.AccountKeeper) ViewKeeper {
-	return ViewKeeper{acck: acck}
+func NewViewKeeper(acck auth.AccountKeeper, tck TotalCoinKeeper) ViewKeeper {
+	return ViewKeeper{acck: acck, tck: tck}
 }
 
 // Logger returns a module-specific logger.
@@ -245,7 +246,7 @@ func (view ViewKeeper) HasCoins(ctx sdk.Context, addr crypto.Address, amt std.Co
 }
 
 func (view ViewKeeper) TotalCoin(ctx sdk.Context, denom string) int64 {
-	return 0
+	return view.TotalCoin(ctx, denom)
 }
 
 // TotalCoinKeeper manages the total amount of coins for various denominations.

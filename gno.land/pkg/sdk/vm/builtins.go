@@ -9,10 +9,6 @@ import (
 // ----------------------------------------
 // SDKBanker
 
-var (
-	totalCoinKey = []byte("total_coin")
-)
-
 type SDKBanker struct {
 	vmk *VMKeeper
 	ctx sdk.Context
@@ -41,12 +37,7 @@ func (bnk *SDKBanker) SendCoins(b32from, b32to crypto.Bech32Address, amt std.Coi
 }
 
 func (bnk *SDKBanker) TotalCoin(denom string) int64 {
-	// panic("not yet implemented")
-
-	s := bnk.ctx.Store(bnk.vmk.iavlKey)
-	r := s.Get(totalCoinKey)
-
-	return int64(r)
+	return bnk.vmk.bank.TotalCoin(bnk.ctx, denom)
 }
 
 func (bnk *SDKBanker) IssueCoin(b32addr crypto.Bech32Address, denom string, amount int64) {
