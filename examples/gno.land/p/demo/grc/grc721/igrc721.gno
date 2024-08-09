@@ -12,6 +12,7 @@ type IGRC721 interface {
 	SetApprovalForAll(operator std.Address, approved bool) error
 	GetApproved(tid TokenID) (std.Address, error)
 	IsApprovedForAll(owner, operator std.Address) bool
+	Mint(to std.Address, tid TokenID) error
 }
 
 type (
