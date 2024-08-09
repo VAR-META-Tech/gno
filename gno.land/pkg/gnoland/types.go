@@ -19,10 +19,6 @@ func ProtoGnoAccount() std.Account {
 	return &GnoAccount{}
 }
 
-func ProtoGnoTotalCoin() std.Coin {
-	return std.Coin{}
-}
-
 type GnoGenesisState struct {
 	Balances []Balance `json:"balances"`
 	Txs      []std.Tx  `json:"txs"`
