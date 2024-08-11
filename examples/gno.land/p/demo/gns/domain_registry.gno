@@ -44,7 +44,7 @@ func NewDomainRegistry(name, symbol string) *domainRegistry {
 	}
 }
 
-// RegisterDomain registers a new domain with the given owner and metadata
+// RegisterDomain registers a new domain with the given metadata
 func (d *domainRegistry) RegisterDomain(owner std.Address, domainName string, metadata Metadata) error {
 	err := d.domains.Mint(owner, grc721.TokenID(domainName))
 	if err != nil {
@@ -74,8 +74,6 @@ func (d *domainRegistry) RenewDomain(domainName string, additionalDuration time.
 	if caller != owner {
 		return ErrUnauthorized
 	}
-
-	// Todo : apply deduction renewal fee here
 
 	metadata.ExpirationTime.Add(additionalDuration)
 	d.metadata.Set(domainName, metadata)
