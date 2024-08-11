@@ -44,6 +44,7 @@ func NewDomainRegistry(name, symbol string) *domainRegistry {
 	}
 }
 
+// RegisterDomain registers a new domain with the given owner and metadata
 func (d *domainRegistry) RegisterDomain(owner std.Address, domainName string, metadata Metadata) error {
 	err := d.domains.Mint(owner, grc721.TokenID(domainName))
 	if err != nil {
@@ -179,38 +180,47 @@ func (d *domainRegistry) GetDomainData(domainName string, field MetadataField) (
 	}
 }
 
+// BalanceOf returns the number of domains owned by a given address
 func (d *domainRegistry) BalanceOf(owner std.Address) (uint64, error) {
 	return d.domains.BalanceOf(owner)
 }
 
+// OwnerOf returns the owner of a given domain name
 func (d *domainRegistry) OwnerOf(domainName string) (std.Address, error) {
 	return d.domains.OwnerOf(grc721.TokenID(domainName))
 }
 
+// SafeTransferFrom safely transfers a domain from one address to another
 func (d *domainRegistry) SafeTransferFrom(from, to std.Address, domainName string) error {
 	return d.domains.SafeTransferFrom(from, to, grc721.TokenID(domainName))
 }
 
+// TransferFrom transfers a domain from one address to another
 func (d *domainRegistry) TransferFrom(from, to std.Address, domainName string) error {
 	return d.domains.TransferFrom(from, to, grc721.TokenID(domainName))
 }
 
+// Approve grants approval to another address to manage a specific domain
 func (d *domainRegistry) Approve(approved std.Address, domainName string) error {
 	return d.domains.Approve(approved, grc721.TokenID(domainName))
 }
 
+// SetApprovalForAll sets approval for an operator to manage all domains of the owner
 func (d *domainRegistry) SetApprovalForAll(operator std.Address, approved bool) error {
 	return d.domains.SetApprovalForAll(operator, approved)
 }
 
+// GetApproved returns the approved address for a specific domain
 func (d *domainRegistry) GetApproved(domainName string) (std.Address, error) {
 	return d.domains.GetApproved(grc721.TokenID(domainName))
 }
 
+// IsApprovedForAll checks if an operator is approved to manage all domains of the owner
 func (d *domainRegistry) IsApprovedForAll(owner, operator std.Address) bool {
 	return d.domains.IsApprovedForAll(owner, operator)
 }
 
+// Mint creates a new domain for a given address
 func (d *domainRegistry) Mint(to std.Address, domainName string) error {
 	return d.domains.Mint(to, grc721.TokenID(domainName))
 }
