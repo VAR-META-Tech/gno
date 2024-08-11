@@ -6,7 +6,6 @@ import (
 
 	"gno.land/p/demo/avl"
 	"gno.land/p/demo/grc/grc721"
-	"gno.land/p/demo/ownable"
 )
 
 // domainRegistry represents a registry for domain names with metadata
