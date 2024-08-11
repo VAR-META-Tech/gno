@@ -1,4 +1,4 @@
-module gno.land/r/demo/gns
+module gno.land/r/demo/domain
 
 require (
 	gno.land/p/demo/grc/grc721 v0.0.0-latest

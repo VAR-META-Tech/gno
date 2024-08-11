@@ -1,4 +1,4 @@
-package gns
+package domain
 
 import (
 	"errors"
