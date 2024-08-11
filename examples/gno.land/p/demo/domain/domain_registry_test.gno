@@ -47,7 +47,7 @@ func TestRegisterDomain(t *testing.T) {
 				RegistrationTime: time.Now(),
 				ExpirationTime:   time.Now().Add(365 * 24 * time.Hour),
 				Description:      "A registered domain",
-				ContactInfo:      "contact@registered.com",
+				ContactInfo:      "gno_name_service@gno.land",
 			},
 			expectError: true,
 		},
@@ -93,7 +93,7 @@ func TestSetDomainData(t *testing.T) {
 				RegistrationTime: time.Now(),
 				ExpirationTime:   time.Now().Add(365 * 24 * time.Hour),
 				Description:      "A test domain",
-				ContactInfo:      "contact@test.com",
+				ContactInfo:      "gno_name_service@gno.land",
 			},
 			expectError: false,
 		},
@@ -107,7 +107,7 @@ func TestSetDomainData(t *testing.T) {
 				RegistrationTime: time.Now(),
 				ExpirationTime:   time.Now().Add(365 * 24 * time.Hour),
 				Description:      "A test domain",
-				ContactInfo:      "contact@test.com",
+				ContactInfo:      "gno_name_service@gno.land",
 			},
 			expectError: true,
 		},
@@ -176,7 +176,7 @@ func TestRenewDomain(t *testing.T) {
 				RegistrationTime: time.Now(),
 				ExpirationTime:   time.Now().Add(365 * 24 * time.Hour),
 				Description:      "A renewable domain",
-				ContactInfo:      "contact@renewable.com",
+				ContactInfo:      "gno_name_service@gno.land",
 			}
 
 			registry.RegisterDomain(c.owner, c.domainName, metadata)
@@ -235,7 +235,7 @@ func TestGetDomainData(t *testing.T) {
 					RegistrationTime: time.Now(),
 					ExpirationTime:   time.Now().Add(365 * 24 * time.Hour),
 					Description:      "A test domain",
-					ContactInfo:      "contact@test.com",
+					ContactInfo:      "gno_name_service@gno.land",
 				}
 
 				err := registry.RegisterDomain(owner, c.domainName, metadata)
@@ -271,7 +271,7 @@ func TestGetDomainFields(t *testing.T) {
 			expected: Metadata{
 				Avatar:      "avatar_url",
 				Description: "A test domain",
-				ContactInfo: "contact@test.com",
+				ContactInfo: "gno_name_service@gno.land",
 			},
 		},
 		{
@@ -294,7 +294,7 @@ func TestGetDomainFields(t *testing.T) {
 					RegistrationTime: time.Now(),
 					ExpirationTime:   time.Now().Add(365 * 24 * time.Hour),
 					Description:      "A test domain",
-					ContactInfo:      "contact@test.com",
+					ContactInfo:      "gno_name_service@gno.land",
 				}
 
 				err := registry.RegisterDomain(owner, c.domainName, metadata)
@@ -354,7 +354,7 @@ func TestTransferDomain(t *testing.T) {
 				RegistrationTime: time.Now(),
 				ExpirationTime:   time.Now().Add(365 * 24 * time.Hour),
 				Description:      "A transferable domain",
-				ContactInfo:      "contact@transfer.com",
+				ContactInfo:      "gno_name_service@gno.land",
 			}
 
 			registry.RegisterDomain(c.owner, c.domainName, metadata)
