@@ -2214,8 +2214,7 @@ func (m *Machine) String() string {
 
 	builder.WriteString("    Blocks:\n")
 
-	for i := len(m.Blocks) - 1; i > 0; i-- {
-		b := m.Blocks[i]
+	for b := m.LastBlock(); b != nil; {
 		gen := builder.Len()/3 + 1
 		gens := "@" // strings.Repeat("@", gen)
 

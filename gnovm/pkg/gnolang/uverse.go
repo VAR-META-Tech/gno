@@ -928,7 +928,17 @@ func UverseNode() *PackageNode {
 			return
 		},
 	)
-	// NOTE: panic is its own statement type, and is not defined as a function.
+	defNative("panic",
+		Flds( // params
+			"err", AnyT(), // args[0]
+		),
+		nil, // results
+		func(m *Machine) {
+			arg0 := m.LastBlock().GetParams1()
+			xv := arg0.Deref()
+			panic(xv.Sprint(m))
+		},
+	)
 	defNative("print",
 		Flds( // params
 			"xs", Vrd(AnyT()), // args[0]
