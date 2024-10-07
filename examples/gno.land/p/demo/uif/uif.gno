@@ -1,5 +1,9 @@
 package uif
 
+import (
+	"strconv"
+)
+
 // Theme structure and default theme
 type Theme struct {
 	PrimaryColor   string
@@ -9,27 +13,34 @@ type Theme struct {
 	Padding        string
 }
 
-// DefaultTheme returns the default theme for components
 func DefaultTheme() Theme {
 	return Theme{
-		PrimaryColor:   "#f6d365",
-		SecondaryColor: "#fda085",
-		FontSize:       "16px",
-		BorderRadius:   "5px",
-		Padding:        "10px 20px",
+		PrimaryColor:   "#3498db",   // Blue color
+		SecondaryColor: "#2ecc71",   // Green color
+		FontSize:       "18px",      // Slightly larger font size
+		BorderRadius:   "8px",       // More rounded corners
+		Padding:        "12px 24px", // Custom padding for better spacing
 	}
 }
 
-// Button component with variadic theme
-func Button(text string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
+// Theme method for Navbar
+func (theme Theme) Navbar(links map[string]string) string {
+	nav := `<nav style='background-color: ` + theme.PrimaryColor + `;
+padding: 10px;
+display: flex;
+justify-content: space-around;
+align-items: center;
+'>`
+	for text, href := range links {
+		nav += `<a href='` + href + `' style='color: white; text-decoration: none; padding: 10px 15px;'>` + text + `</a>`
 	}
+	nav += `</nav>`
+	return nav
+}
 
-	return "\n" + `<a href='#' style='
+// Theme method for Button
+func (theme Theme) Button(text, href string) string {
+	return "\n" + `<a href='` + href + `' style='
 background: linear-gradient(to right, ` + theme.PrimaryColor + `, ` + theme.SecondaryColor + `); /* Gradient */
 border: none;
 color: white;
@@ -42,55 +53,48 @@ margin-top: 10px;
 cursor: pointer;
 border-radius: ` + theme.BorderRadius + `;
 transition: background 0.3s ease;
-'>
-` + text +
-		`</a>` + "\n"
+'>` + text + `</a>` + "\n"
 }
 
-// Image component with variadic theme
-func Image(src string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
+// Theme method for Image with customizable width and height
+func (theme Theme) Image(src, width, height string) string {
+	// Set default width and height if not provided
+	if width == "" {
+		width = "100%"
 	}
-
+	if height == "" {
+		height = "auto"
+	}
 	return "\n" + `<img src='` + src + `' alt='Sample Image' style='
-	                width: 100%;
-	                border-radius: ` + theme.BorderRadius + `;
-	                margin-bottom: 15px;
-	            ' />` + "\n"
+width: ` + width + `;
+height: ` + height + `;
+border-radius: ` + theme.BorderRadius + `;
+margin-bottom: 15px;
+' />` + "\n"
 }
 
-// Card component with variadic theme
-func Card(content string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
+// Theme method for Card with customizable width and height
+func (theme Theme) Card(content, width, height string) string {
+	// Set default width and height if not provided
+	if width == "" {
+		width = "100%"
 	}
-
+	if height == "" {
+		height = "auto"
+	}
 	return "\n" + `<div style='
+width: ` + width + `;
+height: ` + height + `;
 border: 1px solid #ddd;
+margin: 20px 0;
 border-radius: ` + theme.BorderRadius + `;
 padding: ` + theme.Padding + `;
 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-'>
-` + content +
-		`</div>` + "\n"
+'>` + content + `</div>` + "\n"
 }
 
-// TextInput component with variadic theme
-func TextInput(placeholder string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
-	}
-
+// Theme method for TextInput
+func (theme Theme) TextInput(placeholder string) string {
 	return "\n" + `<input type='text' placeholder='` + placeholder + `' style='
 width: 100%;
 padding: ` + theme.Padding + `;
@@ -98,83 +102,62 @@ border-radius: ` + theme.BorderRadius + `;
 border: 1px solid #ccc;
 font-size: ` + theme.FontSize + `;
 margin-bottom: 10px;
-'>
-` + "\n"
+'>` + "\n"
 }
 
-// Navbar component with variadic theme
-func Navbar(links []string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
-	}
-
-	nav := `<nav style='background-color: ` + theme.PrimaryColor + `;
-padding: 10px;
-display: flex;
-justify-content: space-around;
-align-items: center;
-'>
-`
-	for _, link := range links {
-		nav += `<a href='#' style='color: white; text-decoration: none; padding: 10px 15px;'>` + link + `</a>`
-	}
-
-	nav += `</nav>`
-	return nav
+// Theme method for CodeBlock
+func (theme Theme) CodeBlock(code string) string {
+	return "\n" + `<pre style='
+background-color: #f5f5f5;
+color: #333;
+padding: ` + theme.Padding + `;
+border-radius: ` + theme.BorderRadius + `;
+overflow-x: auto;
+font-size: ` + theme.FontSize + `;
+'><code>` + code + `</code></pre>` + "\n"
 }
 
-// New Footer component
-func Footer(links []string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
+// Theme method for Grid
+func (theme Theme) Grid(items []string, columns int, gap string, textAlign string) string {
+	columnsStr := strconv.Itoa(columns)
+	grid := `<div style='
+display: grid;
+grid-template-columns: repeat(` + columnsStr + `, 1fr);
+gap: ` + gap + `;
+padding: ` + theme.Padding + `;
+'>`
+	for _, item := range items {
+		grid += `<div style='text-align: ` + textAlign + `;'>` + item + `</div>`
 	}
+	grid += `</div>`
+	return grid
+}
 
+// Theme method for Footer
+func (theme Theme) Footer(links []string) string {
 	footer := `<footer style='background-color: ` + theme.SecondaryColor + `;
 padding: 10px;
 text-align: center;
-'>
-`
+'>`
 	for _, link := range links {
 		footer += `<a href='#' style='color: white; text-decoration: none; padding: 10px 15px;'>` + link + `</a>`
 	}
-
 	footer += `</footer>`
 	return footer
 }
 
-// Heading component with variadic theme
-func Heading(level int, text string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
-	}
-
-	tag := "h" + string(level+'0')
+// Theme method for Heading
+func (theme Theme) Heading(level int, text string) string {
+	tag := "h" + strconv.Itoa(level)
 	return "\n" + `<` + tag + ` style='
 font-size: ` + theme.FontSize + `;
 color: ` + theme.PrimaryColor + `;
 margin-bottom: 15px;
-'>
-` + text + `</` + tag + `>` + "\n"
+'>` + text + `</` + tag + `>` + "\n"
 }
 
-// Paragraph component with variadic theme
-func Paragraph(text string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
-	}
-
+// Theme method for Paragraph
+func (theme Theme) Paragraph(text string) string {
 	return "\n" + `<p style='
 font-size: ` + theme.FontSize + `;
 color: #333;
@@ -183,33 +166,71 @@ margin-bottom: 15px;
 '>` + text + `</p>` + "\n"
 }
 
-// Checkbox component
-func Checkbox(label string, params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
-	}
+// Theme method for Checkbox
 
-	return "\n" + `<label style='font-size: ` + theme.FontSize + `;'>
-<input type='checkbox' style='margin-right: 10px;'>` + label + `
-</label>` + "\n"
-}
-
-// Divider component
-func Divider(params ...Theme) string {
-	var theme Theme
-	if len(params) > 0 {
-		theme = params[0]
-	} else {
-		theme = DefaultTheme()
-	}
-
+// Theme method for Divider
+func (theme Theme) Divider() string {
 	return "\n" + `<hr style='
 border: 0;
 height: 1px;
 background: ` + theme.PrimaryColor + `;
 margin: 20px 0;
 ' />` + "\n"
+}
+
+// Standalone functions for default theme components
+
+func Navbar(links map[string]string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Navbar(links)
+}
+
+func Button(text, href string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Button(text, href)
+}
+
+func Image(src, width, height string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Image(src, width, height)
+}
+
+func Card(content, width, height string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Card(content, width, height)
+}
+
+func TextInput(placeholder string) string {
+	var theme Theme = DefaultTheme()
+	return theme.TextInput(placeholder)
+}
+
+func CodeBlock(code string) string {
+	var theme Theme = DefaultTheme()
+	return theme.CodeBlock(code)
+}
+
+func Grid(items []string, columns int, gap string, textAlign string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Grid(items, columns, gap, textAlign)
+}
+
+func Footer(links []string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Footer(links)
+}
+
+func Heading(level int, text string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Heading(level, text)
+}
+
+func Paragraph(text string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Paragraph(text)
+}
+
+func Divider() string {
+	var theme Theme = DefaultTheme()
+	return theme.Divider()
 }
