@@ -7,15 +7,15 @@ import (
 )
 
 // RenderHomePage - Renders the Home page with the introduction and navigation
-// RenderHomePage - Renders the Home page with the introduction and navigation
 func RenderHomePage() string {
 	// Define a custom theme for the page
 	customTheme := uif.Theme{
 		PrimaryColor:   "#3498db",   // Blue color
 		SecondaryColor: "#2ecc71",   // Green color
 		FontSize:       "18px",      // Larger font size
-		Padding:        "12px 24px", // Custom padding
+		DefaultPadding: "12px 24px", // Custom padding
 		BorderRadius:   "10px",      // Rounded corners
+		DefaultMargin:  "10px",
 	}
 
 	// Navbar with links and href values using the theme method
@@ -35,18 +35,33 @@ func RenderHomePage() string {
 		The UIF package offers an easy way to create reusable UI components with a built-in theming system.
 		You can either use the default theme or define your own custom theme for a consistent and flexible UI design.
 		In this guide, you'll learn how to use the package, see examples, and discover how it can simplify UI development.
+		Whether you're creating forms, buttons, or entire layouts, UIF provides the tools you need to build
+		a clean, responsive interface.
 	`)
 
-	// Overview of the sections
-	headingOverview := customTheme.Heading(2, "What's Inside")
-	paragraphOverview := customTheme.Paragraph(`
-		- The Components page shows how to use the UIF components.<br>
-		- The Themes page demonstrates how to apply custom themes.<br>
-		- The UI Package page gives an example of how to use UIF with the UI package.
+	// Feature Section: Benefits of Using UIF
+	headingFeatures := customTheme.Heading(2, "Why Use UIF?")
+	paragraphFeatures := customTheme.Paragraph(`
+		UIF provides several advantages for developers looking to streamline UI development:
+		<ul>
+			<li><strong>Consistency:</strong> Ensure a uniform look and feel across all components with theming.</li>
+			<li><strong>Reusability:</strong> Create reusable UI elements that can be used across multiple pages.</li>
+			<li><strong>Flexibility:</strong> Customize each component using the default or custom themes for a personalized experience.</li>
+			<li><strong>Responsiveness:</strong> All components are designed to be responsive, adapting to different screen sizes.</li>
+		</ul>
+	`)
+
+	// How it Works Section
+	headingHowItWorks := customTheme.Heading(2, "How Does It Work?")
+	paragraphHowItWorks := customTheme.Paragraph(`
+		UIF makes it easy to build and customize UI components. With just a few lines of code, you can create buttons,
+		cards, text inputs, and other essential elements. Themes allow you to customize colors, fonts, padding, and more
+		to fit your application's branding or user preferences.
+		You can even create custom themes to meet specific design requirements.
 	`)
 
 	// Call-to-action button for exploring the guide
-	buttonExplore := customTheme.Button("Explore now", "/r/demo/uif:components")
+	buttonExplore := customTheme.Button("Explore Now", "/r/demo/uif:components")
 
 	// Divider to separate sections
 	divider := customTheme.Divider()
@@ -54,15 +69,18 @@ func RenderHomePage() string {
 	// Footer for the page
 	footer := customTheme.Footer([]string{"Privacy Policy", "Contact", "Terms of Service"})
 
-	// Combine everything to create the introduction home page
-	return navbar +
-		headingIntro +
-		paragraphIntro +
-		divider +
-		headingOverview +
-		paragraphOverview +
-		buttonExplore +
-		footer
+	// Organize content using grid layout
+	gridItems := []string{
+		headingIntro + paragraphIntro + divider,
+		headingHowItWorks + paragraphHowItWorks + buttonExplore + divider,
+		headingFeatures + paragraphFeatures,
+	}
+
+	// Create a grid with 1 column, 40px gap, and left-aligned text
+	contentGrid := customTheme.Grid(gridItems, 1, "0", "left")
+
+	// Combine everything into the home page
+	return navbar + contentGrid + footer
 }
 
 func RenderComponentsPage() string {
@@ -96,9 +114,10 @@ func RenderComponentsPage() string {
 	customLargeButtonTheme := uif.Theme{
 		PrimaryColor:   "#1abc9c",   // Teal color
 		SecondaryColor: "#16a085",   // Darker teal
-		Padding:        "16px 32px", // Larger padding for a bigger button
+		DefaultPadding: "16px 32px", // Larger padding for a bigger button
 		FontSize:       "20px",      // Bigger font size
-		BorderRadius:   "12px",      // More rounded corners
+		BorderRadius:   "12px",
+		DefaultMargin:  "10px",
 	}
 	buttonLarge := customLargeButtonTheme.Button("Learn More", "#")
 	buttonCode := uif.CodeBlock(`
@@ -108,15 +127,18 @@ buttonLarge := customLargeButtonTheme.Button("Learn More", "#")
 
 	// Section: Text Input Component
 	textInputTitle := uif.Heading(2, "Text Input Component")
+
 	descriptionTextInput := uif.Paragraph(`
 		TextInput fields allow users to input text. Customize the placeholder text, padding, and border radius using the default theme.
 	`)
+
 	textInput := uif.TextInput("Enter your name")
 	textInputEmail := uif.Theme{
-		PrimaryColor: "#2980b9",   // Blue color
-		Padding:      "10px 20px", // Custom padding for the input
-		FontSize:     "16px",      // Regular font size
-		BorderRadius: "8px",       // Rounded corners
+		PrimaryColor:   "#2980b9",   // Blue color
+		DefaultPadding: "10px 20px", // Custom padding for the input
+		FontSize:       "16px",      // Regular font size
+		BorderRadius:   "8px",
+		DefaultMargin:  "10px", // Rounded corners
 	}.TextInput("Enter your email")
 	textInputCode := uif.CodeBlock(`
 textInput := uif.TextInput("Enter your name")
@@ -137,7 +159,7 @@ textInputEmail := uif.Theme{
 	`)
 	cardContent := uif.Paragraph("This is a card component with some content.")
 	card := uif.Card(cardContent, "", "") // Card with default dimensions
-	cardWithImage := uif.Card(uif.Image("https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg", "300px", "200px")+uif.Paragraph("This card contains an image and text."), "400px", "auto")
+	cardWithImage := uif.Card(uif.Image("https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg", "", "200px")+uif.Paragraph("This card contains an image and text."), "400px", "auto")
 	cardCode := uif.CodeBlock(`
 cardContent := uif.Paragraph("This is a card component with some content.")
 card := uif.Card(cardContent, "", "") // Card with default dimensions
@@ -195,22 +217,25 @@ func RenderThemesPage(themeColor string) string {
 			PrimaryColor:   "#8e44ad",   // Purple color
 			SecondaryColor: "#9b59b6",   // Light purple
 			FontSize:       "18px",      // Larger font size
-			Padding:        "12px 24px", // Custom padding
-			BorderRadius:   "10px",      // Rounded corners
+			DefaultPadding: "12px 24px", // Custom padding
+			BorderRadius:   "10px",
+			DefaultMargin:  "10px", // Rounded corners
 		},
 		"blue": {
 			PrimaryColor:   "#2980b9",   // Blue color
 			SecondaryColor: "#3498db",   // Light blue
 			FontSize:       "16px",      // Smaller font size
-			Padding:        "10px 20px", // Custom padding
-			BorderRadius:   "8px",       // Slightly rounded corners
+			DefaultPadding: "10px 20px", // Custom padding
+			BorderRadius:   "8px",
+			DefaultMargin:  "10px", // Slightly rounded corners
 		},
 		"green": {
 			PrimaryColor:   "#27ae60",   // Green color
 			SecondaryColor: "#2ecc71",   // Light green
 			FontSize:       "20px",      // Larger font size
-			Padding:        "14px 28px", // Larger padding
-			BorderRadius:   "12px",      // More rounded corners
+			DefaultPadding: "14px 28px", // Larger padding
+			BorderRadius:   "12px",
+			DefaultMargin:  "10px", // More rounded corners
 		},
 	}
 
@@ -241,16 +266,16 @@ func RenderThemesPage(themeColor string) string {
 	// Section: Benefits of Using Themes
 	benefitsTitle := theme.Heading(2, "Why Use Themes?")
 	benefitsText := theme.Paragraph(`
-		Using themes ensures a consistent look and feel across your entire application. By defining colors, font sizes, 
-		and other styles in one place, you make it easier to update your design. It also allows you to quickly switch between 
+		Using themes ensures a consistent look and feel across your entire application. By defining colors, font sizes,
+		and other styles in one place, you make it easier to update your design. It also allows you to quickly switch between
 		different styles based on user preferences or branding requirements.
 	`)
 
 	// Section: How to Define a Theme
 	defineTitle := theme.Heading(2, "How to Define a Theme")
 	defineText := theme.Paragraph(`
-		A theme in UIF is defined by specifying a primary color, secondary color, font size, padding, and border radius. These 
-		properties are applied to all UI components such as buttons, cards, text inputs, and more. Here's an example of how to 
+		A theme in UIF is defined by specifying a primary color, secondary color, font size, padding, and border radius. These
+		properties are applied to all UI components such as buttons, cards, text inputs, and more. Here's an example of how to
 		define and apply a theme in UIF:
 	`)
 	defineCode := theme.CodeBlock(`
@@ -258,7 +283,7 @@ theme := uif.Theme{
 	PrimaryColor:   "#8e44ad",  // Purple
 	SecondaryColor: "#9b59b6",  // Light Purple
 	FontSize:       "18px",     // Larger font
-	Padding:        "12px 24px", // Custom padding
+	DefaultPadding:        "12px 24px", // Custom padding
 	BorderRadius:   "10px",     // Rounded corners
 }
 button := theme.Button("Click Me", "#")
@@ -267,7 +292,7 @@ button := theme.Button("Click Me", "#")
 	// Dynamic button creation for each theme
 	themeButtonsTitle := theme.Heading(2, "Apply a Theme")
 	themeButtonsText := theme.Paragraph(`
-		Click on the buttons below to see how different themes can be applied across your UI components. Each button represents 
+		Click on the buttons below to see how different themes can be applied across your UI components. Each button represents
 		a unique theme with different color schemes and styles.
 	`)
 	buttonPurple := themes["purple"].Button("Apply Purple Theme", "/r/demo/uif:themes/purple")
@@ -277,7 +302,7 @@ button := theme.Button("Click Me", "#")
 	// Section: Example UI Components with Selected Theme
 	exampleTitle := theme.Heading(2, "Example Components with the Current Theme")
 	exampleText := theme.Paragraph(`
-		Below are examples of how the selected theme is applied to various UI components. You can see how the colors, padding, 
+		Below are examples of how the selected theme is applied to various UI components. You can see how the colors, padding,
 		and other styles change based on the current theme.
 	`)
 	buttonExample := theme.Button("Sample Button", "#")
@@ -315,8 +340,9 @@ func RenderUIPackagePage() string {
 		PrimaryColor:   "#2980b9",   // Dark blue color
 		SecondaryColor: "#3498db",   // Light blue color
 		FontSize:       "18px",      // Larger font size
-		Padding:        "12px 24px", // Custom padding
-		BorderRadius:   "10px",      // Rounded corners
+		DefaultPadding: "12px 24px", // Custom padding
+		BorderRadius:   "10px",
+		DefaultMargin:  "10px", // Rounded corners
 	}
 
 	// Navbar with links and href values
