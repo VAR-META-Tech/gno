@@ -12,9 +12,9 @@ func RenderHomePage() string {
 	customTheme := uif.Theme{
 		PrimaryColor:   "#3498db",   // Blue color
 		SecondaryColor: "#2ecc71",   // Green color
-		FontSize:       "18px",      // Larger font size
-		DefaultPadding: "12px 24px", // Custom padding
-		BorderRadius:   "10px",      // Rounded corners
+		FontSize:       "18px",      // Slightly larger font size
+		BorderRadius:   "8px",       // More rounded corners
+		DefaultPadding: "12px 24px", // Custom padding for better spacing
 		DefaultMargin:  "10px",
 	}
 
@@ -132,23 +132,36 @@ buttonLarge := customLargeButtonTheme.Button("Learn More", "#")
 		TextInput fields allow users to input text. Customize the placeholder text, padding, and border radius using the default theme.
 	`)
 
-	textInput := uif.TextInput("Enter your name")
+	textInput := uif.TextInput("name", "Enter your name")
 	textInputEmail := uif.Theme{
 		PrimaryColor:   "#2980b9",   // Blue color
 		DefaultPadding: "10px 20px", // Custom padding for the input
 		FontSize:       "16px",      // Regular font size
 		BorderRadius:   "8px",
 		DefaultMargin:  "10px", // Rounded corners
-	}.TextInput("Enter your email")
+	}.TextInput("email", "Enter your email")
 	textInputCode := uif.CodeBlock(`
-textInput := uif.TextInput("Enter your name")
+textInput := uif.TextInput("name","Enter your name")
 textInputEmail := uif.Theme{
 	PrimaryColor: "#2980b9",
 	Padding: "10px 20px",
 	FontSize: "16px",
 	BorderRadius: "8px",
-}.TextInput("Enter your email")
+}.TextInput("email","Enter your email")
 	`)
+
+	formTitle := uif.Heading(2, "Form Component")
+	descriptionForm := uif.Paragraph(`
+		Forms allow users to input data, which can then be submitted to the help page of realm.
+	`)
+
+	// Form fields using TextInput
+	fields := []string{
+		uif.TextInput("addr", "Enter address"),
+	}
+
+	// Create the form with action URL
+	form := uif.Form(fields, "/r/demo/users", "GetUserByAddress", "Submit")
 
 	// Section: Card Component with custom width and height
 	cardTitle := uif.Heading(2, "Card Component")
@@ -189,24 +202,18 @@ divider := uif.Divider()
 image := uif.Image("https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg", "300px", "200px")
 	`)
 
-	// Organizing content in sections using Grid layout
-	gridItems := []string{
-		headingMain + descriptionMain,
-		buttonTitle + descriptionButton + button + buttonLarge + buttonCode,
-		textInputTitle + descriptionTextInput + textInput + textInputEmail + textInputCode,
-		cardTitle + descriptionCard + card + cardWithImage + cardCode,
-		dividerTitle + descriptionDivider + divider + dividerCode,
-		imageTitle + descriptionImage + image + imageCode,
-	}
-
-	// Create a grid with 1 column, 40px gap, and left-aligned text
-	contentGrid := uif.Grid(gridItems, 1, "0", "left")
-
 	// Footer
 	footer := uif.Footer([]string{"Privacy Policy", "Contact", "Terms of Service"})
 
 	// Combine everything into the components page
-	return navbar + contentGrid + footer
+	return navbar + headingMain + descriptionMain +
+		imageTitle + descriptionImage + image + imageCode +
+		cardTitle + descriptionCard + card + cardWithImage + cardCode +
+		buttonTitle + descriptionButton + button + buttonLarge + buttonCode +
+		textInputTitle + descriptionTextInput + textInput + textInputEmail + textInputCode +
+		formTitle + descriptionForm + form +
+		dividerTitle + descriptionDivider + divider + dividerCode +
+		footer
 }
 
 // RenderThemesPage - Renders the page that explains how to apply themes in UIF
@@ -307,7 +314,7 @@ button := theme.Button("Click Me", "#")
 	`)
 	buttonExample := theme.Button("Sample Button", "#")
 	cardExample := theme.Card(theme.Paragraph("This is a sample card with the current theme."), "300px", "auto")
-	inputExample := theme.TextInput("Enter your name")
+	inputExample := theme.TextInput("name", "Enter your name")
 
 	// Divider
 	divider := theme.Divider()

@@ -2,6 +2,7 @@ package uif
 
 import (
 	"strconv"
+	"strings"
 )
 
 // Theme structure and default theme
@@ -111,16 +112,29 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 '>` + content + `</div>`
 }
 
-// Theme method for TextInput
-func (theme Theme) TextInput(placeholder string) string {
-	return `<input type='text' placeholder='` + placeholder + `' style='
+// Theme method for TextInput with name and placeholder
+func (theme Theme) TextInput(name, placeholder string) string {
+	return `<div style='margin-bottom: ` + theme.DefaultMargin + `;'>
+<label for='` + name + `' style='
+display: block;
+margin-bottom: 5px;
+font-size: ` + theme.FontSize + `;
+color: ` + theme.PrimaryColor + `;
+font-weight: bold;
+'>` + strings.Title(name) + `:</label>
+<input type='text' id='` + name + `' name='` + name + `' placeholder='` + placeholder + `' style='
 width: 100%;
 padding: ` + theme.DefaultPadding + `;
 border-radius: ` + theme.BorderRadius + `;
 border: 1px solid #ccc;
 font-size: ` + theme.FontSize + `;
-margin-bottom: ` + theme.DefaultMargin + `;
-'>`
+color: #333;
+transition: border-color 0.3s ease, box-shadow 0.3s ease;
+outline: none;
+' onfocus='this.style.borderColor="` + theme.PrimaryColor + `"; this.style.boxShadow="0 0 5px ` + theme.PrimaryColor + `";'
+onblur='this.style.borderColor="#ccc"; this.style.boxShadow="0 1px 3px rgba(0, 0, 0, 0.1)";'
+>
+</div>`
 }
 
 // Theme method for CodeBlock
@@ -133,7 +147,8 @@ border-radius: ` + theme.BorderRadius + `;
 overflow-x: auto;
 font-size: ` + theme.FontSize + `;
 margin: ` + theme.DefaultMargin + `;
-'><code>` + code + `</code></pre>`
+'><code>` + code + `</code></pre>
+`
 }
 
 // Theme method for Grid
@@ -153,9 +168,11 @@ gap: ` + gap + `;
 
 // Theme method for Footer
 func (theme Theme) Footer(links []string) string {
-	footer := `<footer style='background-color: ` + theme.SecondaryColor + `;
+	footer := `<footer style='
+background-color: ` + theme.SecondaryColor + `;
 padding: 10px;
 text-align: center;
+margin-top: 50px;
 '>`
 	for _, link := range links {
 		footer += `<a href='#' style='color: white; text-decoration: none; padding: 10px 15px;'>` + link + `</a>`
@@ -250,7 +267,40 @@ func (theme Theme) Align(content, align string) string {
 	return `<div style='text-align: ` + align + `;'>` + content + `</div>`
 }
 
+// Theme method for Form with action URL, input fields, and submit button
+func (theme Theme) Form(fields []string, actionURL string, realmFunc string, submitText string) string {
+	formTitle := `<h2 style='
+font-size: 24px;
+color: ` + theme.PrimaryColor + `;
+margin-bottom: ` + theme.DefaultMargin + `;
+text-align: center;
+'>` + realmFunc + `</h2>`
+	return formTitle + `<form action='` + actionURL + `' method='GET' style='
+border-radius: ` + theme.BorderRadius + `;
+'>
+<input type='hidden' name='help'/>
+<input type='hidden' name='__func' value='` + realmFunc + `'/>
+` + strings.Join(fields, "\n") + `
+<button type='submit' style='
+background: linear-gradient(to right, ` + theme.PrimaryColor + `, ` + theme.SecondaryColor + `);
+border: none;
+color: white;
+padding: ` + theme.DefaultPadding + `;
+font-size: ` + theme.FontSize + `;
+cursor: pointer;
+border-radius: ` + theme.BorderRadius + `;
+margin-top: ` + theme.DefaultMargin + `;
+'>
+` + submitText + `
+</button>
+</form>`
+}
+
 // Standalone functions for default theme components
+func Form(fields []string, actionURL string, realmFunc string, submitText string) string {
+	var theme Theme = DefaultTheme()
+	return theme.Form(fields, actionURL, realmFunc, submitText)
+}
 
 func Navbar(links map[string]string) string {
 	var theme Theme = DefaultTheme()
@@ -272,9 +322,9 @@ func Card(content, width, height string) string {
 	return theme.Card(content, width, height)
 }
 
-func TextInput(placeholder string) string {
+func TextInput(name, placeholder string) string {
 	var theme Theme = DefaultTheme()
-	return theme.TextInput(placeholder)
+	return theme.TextInput(name, placeholder)
 }
 
 func CodeBlock(code string) string {
