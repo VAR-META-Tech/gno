@@ -1,4 +1,4 @@
-package uif
+package mdui
 
 import (
 	"testing"

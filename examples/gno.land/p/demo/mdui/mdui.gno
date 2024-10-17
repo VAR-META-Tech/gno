@@ -1,0 +1,113 @@
+package mdui
+
+import (
+	"strconv"
+	"strings"
+)
+
+// Navbar generates a Markdown navigation menu from a map of links
+func Navbar(links map[string]string) string {
+	nav := ""
+	for text, href := range links {
+		if nav != "" {
+			nav += " | " // Add a pipe separator between links
+		}
+		nav += "[" + text + "](" + href + ")"
+	}
+	return nav + "\n"
+}
+
+// Heading creates a Markdown heading based on the level
+func Heading(level int, text string) string {
+	if level < 1 || level > 6 {
+		level = 1
+	}
+	headingPrefix := strings.Repeat("#", level)
+	return headingPrefix + " " + text + "\n"
+}
+
+// Button generates a Markdown link styled as a button
+func Button(text, href string) string {
+	return "[" + text + "](" + href + ")"
+}
+
+// Image generates Markdown for an image
+func Image(src, alt string) string {
+	return "![" + alt + "](" + src + ")"
+}
+
+// CodeBlock wraps code in Markdown code block syntax
+func CodeBlock(code string) string {
+	return "```go\n" + code + "\n```\n"
+}
+
+// Divider renders a Markdown horizontal rule
+func Divider() string {
+	return "---\n"
+}
+
+// Paragraph formats a text paragraph in Markdown
+func Paragraph(text string) string {
+	return text + "\n"
+}
+
+// Quote generates a Markdown blockquote
+func Quote(text string) string {
+	return "> " + text + "\n"
+}
+
+// List generates a Markdown list (ordered or unordered)
+func List(items []string, ordered bool) string {
+	list := ""
+	for i, item := range items {
+		if ordered {
+			list += strconv.Itoa(i+1) + ". " + item + "\n"
+		} else {
+			list += "- " + item + "\n"
+		}
+	}
+	return list
+}
+
+// Link generates a Markdown link
+func Link(text, href string) string {
+	return "[" + text + "](" + href + ")"
+}
+
+// Table generates a Markdown table
+func Table(headers []string, rows [][]string) string {
+	table := "| " + strings.Join(headers, " | ") + " |\n"
+	table += "|" + strings.Repeat("---|", len(headers)) + "\n"
+	for _, row := range rows {
+		table += "| " + strings.Join(row, " | ") + " |\n"
+	}
+	return table
+}
+
+// Bold formats text in bold
+func Bold(text string) string {
+	return "**" + text + "**"
+}
+
+// Italic formats text in italic
+func Italic(text string) string {
+	return "_" + text + "_"
+}
+
+// Strikethrough adds a strikethrough to the text
+func Strikethrough(text string) string {
+	return "~~" + text + "~~"
+}
+
+// TaskList generates a Markdown task list
+func TaskList(tasks map[string]bool) string {
+	list := ""
+	for task, done := range tasks {
+		checkbox := "[ ]"
+		if done {
+			checkbox = "[x]"
+		}
+		list += "- " + checkbox + " " + task + "\n"
+	}
+	return list
+}
