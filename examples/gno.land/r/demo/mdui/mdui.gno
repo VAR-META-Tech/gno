@@ -18,14 +18,14 @@ func RenderHomePage() string {
 	navbar := mdui.Navbar(navbarLinks)
 
 	// Heading for the new introduction
-	headingIntro := mdui.Heading(1, "Welcome to MDUI - Simplifying Markdown UI Development")
+	headingIntro := mdui.Heading(1, "Welcome to MDUI - Markdown-based UI Development")
 
 	// Updated introduction paragraph with new content
 	paragraphIntro := mdui.Paragraph(`
-MDUI is an innovative UI framework built around the power of Markdown, designed to streamline the process of creating user interfaces.
-With MDUI, developers can generate dynamic, reusable components and pages using simple Markdown syntax, making UI development more accessible and efficient.
-Explore our extensive component library, customizable themes, and detailed documentation to start building beautiful interfaces effortlessly.
-Join our community and transform the way you build web applications with MDUI.
+MDUI is a versatile UI framework built on the simplicity and power of Markdown.
+It enables developers to create user interfaces with ease by using Markdown syntax, making web development more accessible and streamlined.
+MDUI is ideal for anyone who wants to quickly build functional, beautiful web pages using familiar Markdown concepts.
+Explore our component library and see how MDUI can simplify your development workflow.
 `)
 
 	// New section heading for getting started
@@ -33,13 +33,23 @@ Join our community and transform the way you build web applications with MDUI.
 
 	// Content for the "Getting Started" section
 	paragraphGettingStarted := mdui.Paragraph(`
-Ready to start using MDUI? Follow these steps to get up and running:
-1. [Explore Components](/r/demo/mdui:components) - Discover the wide range of components available.
-2. [Check out Examples](/r/demo/mdui:examples) - See real-world use cases and example projects.
+Ready to start using MDUI? Follow these simple steps to get up and running:
+1. [Explore Components](/r/demo/mdui:components) - Discover a variety of components available in MDUI.
+2. [Check out Examples](/r/demo/mdui:examples) - Learn how to build real-world projects with MDUI.
+3. [Try It Out](/r/demo/mdui:examples) - See how easy it is to create your first page.
 `)
 
 	// Call-to-action button for getting started
 	buttonGetStarted := mdui.Button("Start Building Now", "/r/demo/mdui:components")
+
+	// Benefits section
+	benefitsHeading := mdui.Heading(2, "Why Choose MDUI?")
+	benefitsList := mdui.List([]string{
+		"Simple and intuitive Markdown-based syntax.",
+		"Reusable components for rapid development.",
+		"Easy integration with existing Markdown projects.",
+		"Perfect for quickly creating functional prototypes.",
+	}, false)
 
 	// Divider to separate sections
 	divider := mdui.Divider()
@@ -51,7 +61,10 @@ Ready to start using MDUI? Follow these steps to get up and running:
 		divider + "\n" +
 		headingGettingStarted + "\n" +
 		paragraphGettingStarted + "\n" +
-		buttonGetStarted + "\n"
+		buttonGetStarted + "\n\n" +
+		divider + "\n" +
+		benefitsHeading + "\n" +
+		benefitsList + "\n"
 
 	return content
 }
