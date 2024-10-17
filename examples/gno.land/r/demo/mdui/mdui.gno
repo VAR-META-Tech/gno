@@ -188,6 +188,36 @@ Below is a list of components available in the MDUI package, along with examples
 			Example:     mdui.Badge("Build Passing", "green"),
 			SampleCode:  `mdui.Badge("Build Passing", "green")`,
 		},
+		{
+			Title:       "Table of Contents",
+			Description: "Generates a simple table of contents based on an array of headings.",
+			Example:     mdui.TableOfContents([]string{"Introduction", "Features", "Conclusion"}),
+			SampleCode:  `mdui.TableOfContents([]string{"Introduction", "Features", "Conclusion"})`,
+		},
+		{
+			Title:       "Keyboard Shortcut",
+			Description: "Formats a keyboard shortcut in Markdown using code block style.",
+			Example:     mdui.KeyboardShortcut("Ctrl", "Alt", "Del"),
+			SampleCode:  `mdui.KeyboardShortcut("Ctrl", "Alt", "Del")`,
+		},
+		{
+			Title:       "Emoji",
+			Description: "Adds an emoji to the content using a shortcode.",
+			Example:     mdui.Emoji("smile"),
+			SampleCode:  `mdui.Emoji("smile")`,
+		},
+		{
+			Title:       "Blockquote with Citation",
+			Description: "Generates a Markdown blockquote with an optional citation.",
+			Example:     mdui.BlockquoteWithCitation("To be or not to be, that is the question.", "William Shakespeare"),
+			SampleCode:  `mdui.BlockquoteWithCitation("To be or not to be, that is the question.", "William Shakespeare")`,
+		},
+		{
+			Title:       "Badge with Icon",
+			Description: "Creates a badge with an icon using Shields.io.",
+			Example:     mdui.BadgeWithIcon("Go Lang", "blue", "go"),
+			SampleCode:  `mdui.BadgeWithIcon("Go Lang", "blue", "go")`,
+		},
 	}
 
 	// Generate Markdown for each component

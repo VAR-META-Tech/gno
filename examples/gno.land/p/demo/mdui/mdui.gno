@@ -129,3 +129,44 @@ func Footnote(label, text string) string {
 func Badge(label, color string) string {
 	return "![](https://img.shields.io/badge/" + strings.ReplaceAll(label, " ", "%20") + "-" + color + ")"
 }
+
+// TableOfContents generates a simple table of contents based on an array of headings
+func TableOfContents(headings []string) string {
+	toc := "## Table of Contents\n"
+	for i, heading := range headings {
+		toc += strconv.Itoa(i+1) + ". [" + heading + "](#" + strings.ToLower(strings.ReplaceAll(heading, " ", "-")) + ")\n"
+	}
+	return toc
+}
+
+// KeyboardShortcut formats a keyboard shortcut in Markdown using code block style
+func KeyboardShortcut(keys ...string) string {
+	return "`" + strings.Join(keys, " + ") + "`"
+}
+
+// Emoji adds an emoji to the content using a shortcode
+func Emoji(name string) string {
+	emojiMap := map[string]string{
+		"smile":     "😊",
+		"heart":     "❤️",
+		"thumbs_up": "👍",
+		// Add more emoji mappings as needed
+	}
+	if emoji, exists := emojiMap[name]; exists {
+		return emoji
+	}
+	return name
+}
+
+// BlockquoteWithCitation generates a Markdown blockquote with an optional citation
+func BlockquoteWithCitation(quote, citation string) string {
+	if citation != "" {
+		return "> " + quote + "\n> \n> — " + citation + "\n"
+	}
+	return "> " + quote + "\n"
+}
+
+// BadgeWithIcon generates a Markdown badge with an icon using Shields.io
+func BadgeWithIcon(label, color, icon string) string {
+	return "![](https://img.shields.io/badge/" + icon + "-" + strings.ReplaceAll(label, " ", "%20") + "-" + color + "?style=flat&logo=" + icon + ")"
+}
