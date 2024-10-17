@@ -99,15 +99,33 @@ func Strikethrough(text string) string {
 	return "~~" + text + "~~"
 }
 
-// TaskList generates a Markdown task list
-func TaskList(tasks map[string]bool) string {
-	list := ""
-	for task, done := range tasks {
-		checkbox := "[ ]"
-		if done {
-			checkbox = "[x]"
-		}
-		list += "- " + checkbox + " " + task + "\n"
+// Alert creates a Markdown-styled alert block with a specified type (info, warning, danger)
+func Alert(content, alertType string) string {
+	var prefix string
+	switch alertType {
+	case "info":
+		prefix = "**ℹ️ Info:** " // Info icon
+	case "warning":
+		prefix = "**⚠️ Warning:** " // Warning icon
+	case "danger":
+		prefix = "**❌ Danger:** " // Danger icon
+	default:
+		prefix = "**ℹ️ Info:** " // Default to info icon
 	}
-	return list
+	return "> " + prefix + content + "\n"
+}
+
+// Collapsible creates a collapsible section with a title and content
+func Collapsible(title, content string) string {
+	return "<details>\n<summary>" + title + "</summary>\n\n" + content + "\n\n</details>\n"
+}
+
+// Footnote generates a Markdown footnote
+func Footnote(label, text string) string {
+	return "[^" + label + "]: " + text + "\n"
+}
+
+// Badge generates a Markdown badge (often used in documentation)
+func Badge(label, color string) string {
+	return "![](https://img.shields.io/badge/" + strings.ReplaceAll(label, " ", "%20") + "-" + color + ")"
 }

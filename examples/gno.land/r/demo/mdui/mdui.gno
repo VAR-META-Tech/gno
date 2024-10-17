@@ -6,40 +6,52 @@ import (
 	"gno.land/p/demo/mdui"
 )
 
-// RenderHomePage - Renders the Home page with a new introduction and updated sections
+// RenderHomePage - Renders the Home page with a fresh introduction and updated sections
+// RenderHomePage - Renders the Home page with a fresh introduction and updated sections
 func RenderHomePage() string {
 	// Navbar with links and href values using the new Markdown approach
 	navbarLinks := map[string]string{
-		"Home":          "/r/demo/mdui",
-		"Components":    "/r/demo/mdui:components",
-		"Documentation": "/r/demo/mdui:documentation",
-		"Get Started":   "/r/demo/mdui:get-started",
+		"Home":       "/r/demo/mdui",
+		"Components": "/r/demo/mdui:components",
+		"Examples":   "/r/demo/mdui:examples",
 	}
 	navbar := mdui.Navbar(navbarLinks)
 
-	// Heading for the introduction
-	headingIntro := mdui.Heading(1, "Welcome to mdui - Your UI Framework Solution")
+	// Heading for the new introduction
+	headingIntro := mdui.Heading(1, "Welcome to MDUI - Simplifying Markdown UI Development")
 
-	// Introduction paragraph with new content
+	// Updated introduction paragraph with new content
 	paragraphIntro := mdui.Paragraph(`
-mdui is a flexible and powerful UI framework designed to help developers create stunning user interfaces with ease.
-Our package comes with a variety of reusable components, theme customization options, and comprehensive documentation.
-Whether you're building a small app or a complex web project, mdui has the tools to simplify the process and enhance your workflow.
-Join our growing community of developers and start crafting beautiful interfaces today.
+MDUI is an innovative UI framework built around the power of Markdown, designed to streamline the process of creating user interfaces.
+With MDUI, developers can generate dynamic, reusable components and pages using simple Markdown syntax, making UI development more accessible and efficient.
+Explore our extensive component library, customizable themes, and detailed documentation to start building beautiful interfaces effortlessly.
+Join our community and transform the way you build web applications with MDUI.
 `)
 
-	// Call-to-action button for learning more
-	buttonLearnMore := mdui.Button("Learn More", "/r/demo/mdui:components")
+	// New section heading for getting started
+	headingGettingStarted := mdui.Heading(2, "Getting Started with MDUI")
+
+	// Content for the "Getting Started" section
+	paragraphGettingStarted := mdui.Paragraph(`
+Ready to start using MDUI? Follow these steps to get up and running:
+1. [Explore Components](/r/demo/mdui:components) - Discover the wide range of components available.
+2. [Check out Examples](/r/demo/mdui:examples) - See real-world use cases and example projects.
+`)
+
+	// Call-to-action button for getting started
+	buttonGetStarted := mdui.Button("Start Building Now", "/r/demo/mdui:components")
 
 	// Divider to separate sections
 	divider := mdui.Divider()
 
-	// Organize content using Markdown
+	// Organize the new content using Markdown
 	content := navbar + "\n" +
 		headingIntro + "\n" +
 		paragraphIntro + "\n" +
 		divider + "\n" +
-		buttonLearnMore + "\n"
+		headingGettingStarted + "\n" +
+		paragraphGettingStarted + "\n" +
+		buttonGetStarted + "\n"
 
 	return content
 }
@@ -48,18 +60,17 @@ Join our growing community of developers and start crafting beautiful interfaces
 func RenderComponentsPage() string {
 	// Navbar with updated links
 	navbarLinks := map[string]string{
-		"Home":          "/r/demo/mdui",
-		"Components":    "/r/demo/mdui:components",
-		"Documentation": "/r/demo/mdui:documentation",
-		"Get Started":   "/r/demo/mdui:get-started",
+		"Home":       "/r/demo/mdui",
+		"Components": "/r/demo/mdui:components",
+		"Examples":   "/r/demo/mdui:examples",
 	}
 	navbar := mdui.Navbar(navbarLinks)
 
 	// Main title and introduction
-	headingMain := mdui.Heading(1, "mdui Components Overview")
+	headingMain := mdui.Heading(1, "MDUI Components Overview")
 	descriptionMain := mdui.Paragraph(`
-mdui offers a variety of components that help developers build modern user interfaces quickly and efficiently.
-Below is a list of components available in the mdui package, along with examples of how to use them and sample code.
+MDUI offers a variety of components that help developers build modern user interfaces quickly and efficiently.
+Below is a list of components available in the MDUI package, along with examples of how to use them and sample code.
 `)
 
 	// List of components with descriptions, examples, and sample code
@@ -88,19 +99,13 @@ Below is a list of components available in the mdui package, along with examples
 			SampleCode:  `mdui.Button("Click Here", "/click-here")`,
 		},
 		{
-			Title:       "Link",
-			Description: "A simple link component to create hyperlinks.",
-			Example:     mdui.Link("Visit our website", "https://example.com"),
-			SampleCode:  `mdui.Link("Visit our website", "https://example.com")`,
-		},
-		{
 			Title:       "Image",
 			Description: "An image component for displaying pictures with optional alt text.",
 			Example:     mdui.Image("https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp", "Sample Image"),
 			SampleCode:  `mdui.Image("https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp", "Sample Image")`,
 		},
 		{
-			Title:       "CodeBlock",
+			Title:       "Code Block",
 			Description: "A component for rendering code blocks in Markdown.",
 			Example:     mdui.CodeBlock("func main() {\n    fmt.Println(\"Hello, world!\")\n}"),
 			SampleCode:  `mdui.CodeBlock("func main() {\n    fmt.Println(\"Hello, world!\")\n}")`,
@@ -160,10 +165,28 @@ Below is a list of components available in the mdui package, along with examples
 			SampleCode:  `mdui.Strikethrough("This text is crossed out")`,
 		},
 		{
-			Title:       "TaskList",
-			Description: "A list of tasks with checkboxes, indicating completion status.",
-			Example:     mdui.TaskList(map[string]bool{"Task 1": true, "Task 2": false}),
-			SampleCode:  `mdui.TaskList(map[string]bool{"Task 1": true, "Task 2": false})`,
+			Title:       "Alert",
+			Description: "An alert block using Markdown with a specified type (info, warning, danger).",
+			Example:     mdui.Alert("This action cannot be undone.", "danger"),
+			SampleCode:  `mdui.Alert("This action cannot be undone.", "danger")`,
+		},
+		{
+			Title:       "Collapsible",
+			Description: "A collapsible section that expands when clicked, using plain Markdown.",
+			Example:     mdui.Collapsible("Show more", "Here is the additional content."),
+			SampleCode:  `mdui.Collapsible("Show more", "Here is the additional content.")`,
+		},
+		{
+			Title:       "Footnote",
+			Description: "Generates a footnote reference and definition.",
+			Example:     mdui.Footnote("1", "This is a footnote."),
+			SampleCode:  `mdui.Footnote("1", "This is a footnote.")`,
+		},
+		{
+			Title:       "Badge",
+			Description: "Creates a badge using the Shields.io service.",
+			Example:     mdui.Badge("Build Passing", "green"),
+			SampleCode:  `mdui.Badge("Build Passing", "green")`,
 		},
 	}
 
@@ -186,14 +209,118 @@ Below is a list of components available in the mdui package, along with examples
 		componentMarkdown
 }
 
+func RenderExamplesPage() string {
+	// Navbar with links
+	navbarLinks := map[string]string{
+		"Home":       "/r/demo/mdui",
+		"Components": "/r/demo/mdui:components",
+		"Examples":   "/r/demo/mdui:examples",
+	}
+	navbar := mdui.Navbar(navbarLinks)
+
+	// Main title and introduction
+	headingMain := mdui.Heading(1, "MDUI Example Page - Showcase All Components")
+	introParagraph := mdui.Paragraph(`
+Welcome to the MDUI example page! This page demonstrates all the components available in MDUI, showcasing the power of Markdown for building user interfaces.
+Explore the various elements below to see how you can create beautiful and functional web pages using MDUI.
+`)
+
+	// Hero section
+	heroImage := "https://png.pngtree.com/thumb_back/fh260/background/20230711/pngtree-d-rendering-of-a-landing-page-concept-featuring-an-abstract-blue-image_3838290.jpg"
+	heroTitle := mdui.Heading(2, "Welcome to the World of MDUI")
+	heroText := mdui.Paragraph(`
+MDUI enables developers to build modern, clean, and responsive user interfaces effortlessly.
+This example showcases all the components available in the MDUI library.
+`)
+
+	// Using the Badge component
+	badge := mdui.Badge("New Feature", "green")
+
+	// Features section using List
+	featuresHeading := mdui.Heading(2, "Key Features")
+	featuresList := mdui.List([]string{
+		"Responsive design with Markdown simplicity",
+		"Reusable components for rapid development",
+		"Customizable themes and styling",
+		"Easy integration with existing projects",
+	}, false)
+
+	// Alert section for different alert types
+	alertSectionHeading := mdui.Heading(2, "Alert Messages")
+	alertInfo := mdui.Alert("This is an informational message.", "info")
+	alertWarning := mdui.Alert("Be cautious about this warning.", "warning")
+	alertDanger := mdui.Alert("This is a dangerous action. Proceed with care.", "danger")
+
+	// Code block example
+	codeBlockHeading := mdui.Heading(2, "Code Example")
+	codeBlock := mdui.CodeBlock(`func main() {
+    fmt.Println("Hello, MDUI!")
+}`)
+
+	// Table example
+	tableHeading := mdui.Heading(2, "Feature Comparison Table")
+	table := mdui.Table([]string{"Feature", "MDUI", "Other Frameworks"}, [][]string{
+		{"Ease of Use", "High", "Medium"},
+		{"Flexibility", "High", "Variable"},
+		{"Learning Curve", "Low", "Medium"},
+	})
+
+	// Collapsible section
+	collapsible := mdui.Collapsible("Show more details", `
+Here is some more detailed information about MDUI and its components.
+You can use collapsible sections to keep the layout clean and reveal information when needed.
+`)
+
+	// Quote example
+	quoteHeading := mdui.Heading(2, "Inspirational Quote")
+	quote := mdui.Quote("Simplicity is the ultimate sophistication. - Leonardo da Vinci")
+
+	// Footnote example
+	footnote := mdui.Footnote("1", "MDUI is a fictional Markdown UI framework for demonstration purposes.")
+
+	// Divider for separating sections
+	divider := mdui.Divider()
+
+	// Organize all elements to create a comprehensive example
+	content := navbar + "\n" +
+		headingMain + "\n" +
+		introParagraph + "\n" +
+		divider + "\n" +
+		mdui.Image(heroImage, "Landing Page Background") + "\n" +
+		heroTitle + " " + badge + "\n" +
+		heroText + "\n" +
+		divider + "\n" +
+		featuresHeading + "\n" +
+		featuresList + "\n" +
+		divider + "\n" +
+		alertSectionHeading + "\n" +
+		alertInfo + "\n" +
+		alertWarning + "\n" +
+		alertDanger + "\n" +
+		divider + "\n" +
+		codeBlockHeading + "\n" +
+		codeBlock + "\n" +
+		divider + "\n" +
+		tableHeading + "\n" +
+		table + "\n" +
+		divider + "\n" +
+		collapsible + "\n" +
+		divider + "\n" +
+		quoteHeading + "\n" +
+		quote + "\n" +
+		divider + "\n" +
+		footnote + "\n"
+
+	return content
+}
+
 // Render - The main entry point for displaying different pages
 func Render(path string) string {
-	segments := strings.Split(path, "/")
-
-	switch segments[0] {
-	case "components":
+	// Routing logic for multiple pages
+	if strings.Contains(path, "components") {
 		return RenderComponentsPage()
-	default:
-		return RenderHomePage()
+	} else if strings.Contains(path, "examples") {
+		return RenderExamplesPage()
 	}
+	return RenderHomePage() // Default to the home page
 }
