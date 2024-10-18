@@ -7,7 +7,6 @@ import (
 )
 
 // RenderHomePage - Renders the Home page with a fresh introduction and updated sections
-// RenderHomePage - Renders the Home page with a fresh introduction and updated sections
 func RenderHomePage() string {
 	// Navbar with links and href values using the new Markdown approach
 	navbarLinks := map[string]string{
