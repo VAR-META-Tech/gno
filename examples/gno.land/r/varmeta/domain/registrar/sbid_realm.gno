@@ -14,10 +14,6 @@ import (
 	sbid "gno.land/p/varmeta/demo/v7/sbid"
 )
 
-func Render(path string) string {
-	return "Welcome to varmeta realm bidding"
-}
-
 var root *avl.Tree // domainName <- *sbid.Bid{BidInfo}
 
 func init() {
