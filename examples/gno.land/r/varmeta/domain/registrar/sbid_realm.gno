@@ -85,6 +85,7 @@ func CommitPrice(domainName string, price int64, secret string) string {
 	return bid.CommitPrice(domainName, price, secret, caller)
 }
 
+// Get all joined bid session and status
 func GetJoinedBid(caller string) []sbid.BidStatus {
 	return findStatusInRoot(caller)
 }
@@ -94,19 +95,16 @@ func findStatusInRoot(caller string) []sbid.BidStatus {
 	root.Iterate("", "", func(key string, value interface{}) bool {
 		bid := value.(*sbid.Bid)
 		if bid.Infos.Has(caller) {
-			// owner := GetOwner(key)
-			// if owner != "" {
-			// 	ownedBy := ufmt.Sprintf("owned by %s", owner.String())
-			// 	newStt := sbid.BidStatus{
-			// 		BidObject: key,
-			// 		Status:    ownedBy,
-			// 	}
-			// 	listStt = append(listStt, newStt)
-			// 	// returns false to avoid duplicate status
-			// 	return false
-			// }
-			stt := bid.GetStatus(key, caller)
-			listStt = append(listStt, stt)
+			owner := GetOwner(key)
+			if owner != "" {
+				ownedBy := ufmt.Sprintf("owned by %s", owner.String())
+				newStt := bid.GetStatus(key, caller)
+				newStt.Status = ownedBy
+				listStt = append(listStt, newStt)
+			} else {
+				stt := bid.GetStatus(key, caller)
+				listStt = append(listStt, stt)
+			}
 		}
 		return false
 	})
@@ -210,4 +208,56 @@ func chargeFee(amount int64, from std.Address) string {
 	// ufmt.Println("send from contract ", bankerContract.String(), " to admin ", admin.String(), " amount: ", ugnotCoin)
 	bankerUser.SendCoins(bankerContract, admin, coinsToTransfer)
 	return "charged"
+}
+
+// for debug purpose
+func Debug(dName string) []string {
+	bid := getBid(dName)
+	return bid.Debug(dName)
+}
+
+// get all the list of joined domain name and session
+// loop in root to get all dName
+// loop in bid.InfosTree to get all caller joined in that bid
+func GetListStatus() []totalStatus {
+	dNameList := []string{}
+	root.Iterate("", "", func(key string, value interface{}) bool {
+		dNameList = append(dNameList, key)
+		return false
+	})
+	result := []totalStatus{}
+	callerList := []string{}
+	for _, dN := range dNameList {
+		// get bid session
+		bid := getBid(dN)
+		bid.Infos.Iterate("", "", func(key string, value interface{}) bool {
+			callerList = append(callerList, key)
+			return false
+		})
+		thisDnStatus := totalStatus{}
+		thisDnStatus.DomainName = dN
+		for _, cl := range callerList {
+			callerStatus := bid.GetStatus(dN, cl)
+			thisDnStatus.Caller = cl
+			thisDnStatus.Status = callerStatus
+		}
+		result = append(result, thisDnStatus)
+	}
+	return result
+}
+
+// get lists of domain name that be openned
+func GetListDomainName() []string {
+	result := []string{}
+	root.Iterate("","", func(key string, value interface{}) bool {
+		result = append(result, key)
+		return false
+	})
+	return result
+}
+
+type totalStatus struct {
+	DomainName string
+	Caller     string
+	Status     sbid.BidStatus
 }
