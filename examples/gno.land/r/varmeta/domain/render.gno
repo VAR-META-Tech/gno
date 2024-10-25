@@ -33,15 +33,14 @@ Participate in secure, fair, and confidential bidding for the domains listed bel
 
 	// Sample list of domains for demonstration
 	domains := []struct {
-		Name    string
-		Status  string
-		Winner  string
-		BidLink string
+		Name   string
+		Status string
+		Winner string
 	}{
-		{"example.com", "Commit Hash Phase", "", "https://gno.studio/connect/view/gno.land/r/varmeta/demo/v7/domain/registrar?network=test4#CommitHash"},
-		{"mydomain.org", "Commit Price Phase", "", "https://gno.studio/connect/view/gno.land/r/varmeta/demo/v7/domain/registrar?network=test4#CommitPrice"},
-		{"business.net", "Claiming", "", "https://gno.studio/connect/view/gno.land/r/varmeta/demo/v7/domain/registrar?network=test4#Claim"},
-		{"techworld.co", "Bidding Closed", "", ""},
+		{"example.com", "Commit Hash Phase", ""},
+		{"mydomain.org", "Commit Price Phase", ""},
+		{"business.net", "Claiming", "Ngoc"},
+		{"techworld.co", "Bidding Closed", "Ngoc"},
 	}
 
 	// Generate Markdown for each domain
@@ -49,18 +48,16 @@ Participate in secure, fair, and confidential bidding for the domains listed bel
 		builder.AddHeading(2, domain.Name).
 			AddParagraph("Status: " + domain.Status)
 
-		// Only add a "Place Bid" button if bidding is open
-		if domain.BidLink != "" {
-			if domain.Status == "Commit Hash Phase" {
-				builder.AddButton("Commit Hash", domain.BidLink)
-			} else if domain.Status == "Commit Price Phase" {
-				builder.AddButton("Commit Price", domain.BidLink)
-			} else if domain.Status == "Claiming" {
-				builder.AddParagraph("Winner: " + domain.Winner)
-				builder.AddButton("Claim", domain.BidLink)
-			} else {
-				builder.AddParagraph("Winner: " + domain.Winner)
-			}
+			// Only add a "Place Bid" button if bidding is open
+		if domain.Status == "Commit Hash Phase" {
+			builder.AddButton("Commit Hash", "https://gno.studio/connect/view/gno.land/r/varmeta/demo/v7/domain/registrar?network=test4#CommitHash")
+		} else if domain.Status == "Commit Price Phase" {
+			builder.AddButton("Commit Price", "https://gno.studio/connect/view/gno.land/r/varmeta/demo/v7/domain/registrar?network=test4#CommitPrice")
+		} else if domain.Status == "Claiming" {
+			builder.AddParagraph("Winner: " + domain.Winner)
+			builder.AddButton("Claim", "https://gno.studio/connect/view/gno.land/r/varmeta/demo/v7/domain/registrar?network=test4#Claim")
+		} else {
+			builder.AddParagraph("Winner: " + domain.Winner)
 		}
 		builder.AddBreakLine()
 		builder.AddDivider()
