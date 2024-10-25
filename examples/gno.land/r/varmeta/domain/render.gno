@@ -18,7 +18,7 @@ func RenderBiddingListPage() string {
 	builder.AddNavbar(navbarLinks)
 
 	// Title and introduction
-	builder.AddHeading(1, "Domains Available for Bidding").
+	builder.AddHeading(1, " Bidding Domains").
 		AddParagraph(`
 Browse the list of domains currently open for bidding. Each domain has relevant details, including the current bid status and a button to place your bid.
 Participate in secure, fair, and confidential bidding for the domains listed below.
@@ -26,6 +26,8 @@ Participate in secure, fair, and confidential bidding for the domains listed bel
 		AddDivider()
 
 	// "Start New Bidding" button
+	builder.AddBreakLine()
+
 	builder.AddButton("Start New Bidding", "https://gno.studio/connect/view/gno.land/r/varmeta/demo/v7/domain/registrar?network=test4#CommitHash").
 		AddDivider()
 
@@ -60,7 +62,7 @@ Participate in secure, fair, and confidential bidding for the domains listed bel
 				builder.AddParagraph("Winner: " + domain.Winner)
 			}
 		}
-
+		builder.AddBreakLine()
 		builder.AddDivider()
 	}
 
