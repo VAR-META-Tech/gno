@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"time"
 
+	"gno.land/p/demo/ufmt"
+
 	"gno.land/p/demo/avl"
 )
 
@@ -106,6 +108,18 @@ func (b *Bid) CommitPrice(domainName string, price int64, secret string, caller 
 	}
 
 	return "undefined"
+}
+
+// for debug purpose
+func (b *Bid) Debug(dName string) []string {
+	listString := []string{}
+	b.Infos.Iterate("", "", func(key string, value interface{}) bool {
+		bidInf := value.(*bidInfo)
+		bidString := ufmt.Sprintf("%s----%d----%s", bidInf.Bidder, bidInf.Price, bidInf.IsWinner)
+		listString = append(listString, bidString)
+		return false
+	})
+	return listString
 }
 
 func (b *Bid) GetCurrentWinnerInfo() bidInfo {
