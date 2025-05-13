@@ -105,6 +105,8 @@ func (s *Server) logEvent(evt events.Event) {
 		logEvt = string(rawEvt)
 
 		if evt.Type() == events.EvtTxResult {
+
+			// Temporary structure definition
 			type TxMsg struct {
 				Package struct {
 					Path string `json:"path"`
@@ -117,13 +119,15 @@ func (s *Server) logEvent(evt events.Event) {
 			type TxResultJSON struct {
 				Tx Tx `json:"tx"`
 			}
-
+			// Unmarshal the JSON data into the temporary structure
 			var txResult TxResultJSON
 			if err := json.Unmarshal(rawEvt, &txResult); err == nil && len(txResult.Tx.Msg) > 0 {
 				packagePath := txResult.Tx.Msg[0].Package.Path
 				packageName := txResult.Tx.Msg[0].Package.Name
 				s.logger.Info("User addPkg ", "name", packageName,
 					"path", packagePath)
+
+				// cache path
 				cachepath.Set(packagePath)
 			} else {
 				s.logger.Warn("Failed to parse package path or no messages found", "error", err)

@@ -28,9 +28,8 @@ func (r *rootResolver) Name() string {
 }
 
 func (r *rootResolver) Resolve(fset *token.FileSet, path string) (*Package, error) {
-
 	if cachepath.Get(path) {
-		return nil, errors.New("Package conflict root in " + path)
+		return nil, errors.New("Root package conflict in " + path)
 	}
 
 	dir := filepath.Join(r.root, path)
