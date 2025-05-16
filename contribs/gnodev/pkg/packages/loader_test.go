@@ -3,7 +3,7 @@ package packages
 import (
 	"testing"
 
-	cachepath "github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
+"github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
 	"github.com/gnolang/gno/tm2/pkg/std"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
