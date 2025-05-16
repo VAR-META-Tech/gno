@@ -6,7 +6,7 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
-cachepath "github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
+	"github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
 )
 
 type rootResolver struct {
