@@ -7,7 +7,8 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
- "github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
+
+	"github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
 )
 
 type LocalResolver struct {
