@@ -9,7 +9,7 @@ import (
 	gopath "path"
 	"strings"
 
-	cachepath "github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
+ "github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
 	"github.com/gnolang/gno/gno.land/pkg/sdk/vm"
 	"github.com/gnolang/gno/tm2/pkg/bft/rpc/client"
 	"github.com/gnolang/gno/tm2/pkg/std"

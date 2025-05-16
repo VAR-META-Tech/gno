@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"sync"
 
-	cachepath "github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
+"github.com/gnolang/gno/contribs/gnodev/pkg/cachepath"
 	"github.com/gnolang/gno/contribs/gnodev/pkg/events"
 	"github.com/gorilla/websocket"
 )
