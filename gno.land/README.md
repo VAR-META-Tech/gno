@@ -25,3 +25,23 @@ Afterwards, the platform plans to improve IBC by adding new capabilities for int
 * On-chain governance: managed by a new DAO framework with support for sub-DAOs
 * Licensing model: a unique approach that allows open-source code to be monetized by default
 * Interoperability and shared security: IBCv1, IBCx, ICS1, ICSx
+<!-- BEGIN GENERATED PACKAGE LIST -->
+
+* [github.com](./github.com)
+  * [github.com/gnolang/gno/gno.land/cmd/gnokey](./github.com/gnolang/gno/gno.land/cmd/gnokey) - Package main has no documentation
+  * [github.com/gnolang/gno/gno.land/cmd/gnoland](./github.com/gnolang/gno/gno.land/cmd/gnoland) - Package main has no documentation
+  * [github.com/gnolang/gno/gno.land/cmd/gnoweb](./github.com/gnolang/gno/gno.land/cmd/gnoweb) - Package main has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/gnoclient](./github.com/gnolang/gno/gno.land/pkg/gnoclient) - Package gnoclient has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/gnoland](./github.com/gnolang/gno/gno.land/pkg/gnoland) - contains the bootstrapping code to launch a gno.land node.
+  * [github.com/gnolang/gno/gno.land/pkg/gnoland/ugnot](./github.com/gnolang/gno/gno.land/pkg/gnoland/ugnot) - Package ugnot has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/gnoweb](./github.com/gnolang/gno/gno.land/pkg/gnoweb) - Package gnoweb has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/gnoweb/components](./github.com/gnolang/gno/gno.land/pkg/gnoweb/components) - Package components has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/gnoweb/markdown](./github.com/gnolang/gno/gno.land/pkg/gnoweb/markdown) - Package markdown has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/gnoweb/weburl](./github.com/gnolang/gno/gno.land/pkg/gnoweb/weburl) - Package weburl has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/integration](./github.com/gnolang/gno/gno.land/pkg/integration) - offers utilities to run txtar-based tests against the gnoland system
+  * [github.com/gnolang/gno/gno.land/pkg/integration/process](./github.com/gnolang/gno/gno.land/pkg/integration/process) - Package main has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/keyscli](./github.com/gnolang/gno/gno.land/pkg/keyscli) - Package keyscli has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/log](./github.com/gnolang/gno/gno.land/pkg/log) - Package log has no documentation
+  * [github.com/gnolang/gno/gno.land/pkg/sdk/vm](./github.com/gnolang/gno/gno.land/pkg/sdk/vm) - Package vm has no documentation
+
+<!-- END GENERATED PACKAGE LIST -->
